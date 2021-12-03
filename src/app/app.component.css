@@ -1,0 +1,10 @@
+.span {
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+.meeting-bg {
+  background: url('https://assets.website-files.com/5cb90b63adbd7da37ea60e30/5f5bc69416e7fb495275b378_how%20leaders%20run%20meetings%20tips%20from%20top%20execs.jpg') no-repeat center;
+  background-size: cover;
+}
