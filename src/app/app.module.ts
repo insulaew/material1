@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FlexLayoutModule} from "@angular/flex-layout";
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,8 +12,9 @@ import { NewUserComponent } from './new-user/new-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserService } from './services/user.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MeetingService } from './services/meeting.service';
+import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
 
 const appRoutes: Routes = [
   { path: 'test', component: TestComponent },
@@ -42,7 +43,11 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [UserService, MeetingService],
+  providers: [UserService, MeetingService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpErrorInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

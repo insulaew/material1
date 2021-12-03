@@ -44,5 +44,4 @@ export class NewUserComponent implements OnInit {
     console.log(JSON.stringify(newUser));
     this.userService.addUser(newUser);
   }
-
 }

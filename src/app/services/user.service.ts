@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subject } from "rxjs";
@@ -9,7 +9,6 @@ import { User } from "../models/User.model";
 export class UserService {
 
 	usersSubject = new Subject<any[]>();
-	errorMessage!: any;
 	private users!: User[];
 
 	constructor(
@@ -28,16 +27,12 @@ export class UserService {
 	}
 
 	addUser(user: any) {
-		this.httpClient.post<any>('http://localhost:9097/api/Utilisateur', user)
+		this.httpClient.post<any>('http://localhost:9097/api/Utilisateur', user, { observe: "body", responseType: "json" })
 			.subscribe({
 				next: data => {
 					console.log(data);
 					this.openSnackBar();
 					this.router.navigate(['/users']);
-				},
-				error: error => {
-					this.errorMessage = error;
-					console.log(error);
 				}
 			});
 	}
@@ -49,10 +44,6 @@ export class UserService {
 					console.log(data);
 					this.users = data;
 					this.emitUsers();
-				},
-				error: error => {
-					this.errorMessage = error;
-					console.log(error);
 				}
 			});
 	}
