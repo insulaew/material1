@@ -1,19 +1,18 @@
-import { Optional } from "@angular/core";
 import { FreeTool } from "./FreeTool.model";
 import { Room } from "./Room.model";
 import { User } from "./User.model";
 
-export class Meeting {
+export class MeetingDisplay {
 
     constructor(
         public id: number,
         public type: string,
-        @Optional() public userDto: User,
+        public userName: string,
         public startHour: number,
         public endHour: number,
         public numberOfPersons: number,
         public reserved: boolean,
-        @Optional() public roomDto: Room,
+        public roomCode: string,
         public freeToolDtos: FreeTool[]
     ) {
 

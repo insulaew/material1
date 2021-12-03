@@ -1,0 +1,10 @@
+<div mat-dialog-content class="mat-typography">
+    <li>Débute à : {{data.startHour}}H</li>
+    <li>Termine à : {{data.endHour}}H</li>
+    <li>Cette réunion est de type : {{data.type}}</li>
+    <li>Les équipements nécessaires à la réunion sont : {{tools}}</li>
+    <li>A lieu dans la salle : {{room?.id!}}</li>
+    <li>{{roomTools}}</li>
+    <li>Réservée ? : <input type="checkbox" [checked]="data.reserved" disabled></li>
+    <li>Par : {{user?.firstName!}}</li>
+  </div>

@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
-  <span class="span">Liste des réunions avec salle réservée </span>
+  <span class="span">Liste des réunions avec salle non réservée </span>
 </mat-toolbar>
 <table mat-table [dataSource]="meetings" class="mat-elevation-z8 demo-table">
     <!-- Position Column -->
@@ -18,6 +18,11 @@
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef>Type</th>
       <td mat-cell *matCellDef="let element">{{element.type}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="roomCode">
+      <th mat-header-cell *matHeaderCellDef>Code de la Salle</th>
+      <td mat-cell *matCellDef="let element">{{element.roomCode}}</td>
     </ng-container>
   
     <!-- Symbol Column -->

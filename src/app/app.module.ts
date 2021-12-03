@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { ToolsViewComponent } from './tools-view/tools-view.component';
 import { RouterModule, Routes } from '@angular/router';
-import { TestComponent } from './test/test.component';
 import { NewUserComponent } from './new-user/new-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersListComponent } from './users-list/users-list.component';
@@ -15,9 +14,13 @@ import { UserService } from './services/user.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MeetingService } from './services/meeting.service';
 import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
+import { SallesReserveesComponent } from './salles-reservees/salles-reservees.component';
+import { SallesNonReserveesComponent } from './test/salles-non-reservees.component';
 
 const appRoutes: Routes = [
-  { path: 'test', component: TestComponent },
+  { path: '', component: SallesNonReserveesComponent },
+  { path: 'salles-non-reservees', component: SallesNonReserveesComponent },
+  { path: 'salles-reservees', component: SallesReserveesComponent },
   { path: 'new-user', component: NewUserComponent },
   { path: 'users', component: UsersListComponent },
 ]
@@ -25,9 +28,10 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     ToolsViewComponent,
-    TestComponent,
+    SallesNonReserveesComponent,
     NewUserComponent,
-    UsersListComponent
+    UsersListComponent,
+    SallesReserveesComponent
   ],
   imports: [
     BrowserModule,

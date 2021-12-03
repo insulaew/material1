@@ -2,7 +2,7 @@ export class RoomTool {
 
     constructor(
         public roomToolId: number,
-        public type: String,
+        public type: string,
         public roomId: number
     ) {
 

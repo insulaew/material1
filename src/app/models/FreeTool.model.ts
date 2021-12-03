@@ -2,7 +2,7 @@ export class FreeTool {
 
     constructor(
         public freeToolId: number,
-        public type: String,
+        public type: string,
         public meetingsIds: number[]
     ) {
 
