@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToolsViewComponent } from './tools-view.component';
+import { ReserverSalleComponent } from './reserver-salle.component';
 
-describe('ToolsViewComponent', () => {
-  let component: ToolsViewComponent;
-  let fixture: ComponentFixture<ToolsViewComponent>;
+describe('ReserverSalleComponent', () => {
+  let component: ReserverSalleComponent;
+  let fixture: ComponentFixture<ReserverSalleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolsViewComponent ]
+      declarations: [ ReserverSalleComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ToolsViewComponent);
+    fixture = TestBed.createComponent(ReserverSalleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

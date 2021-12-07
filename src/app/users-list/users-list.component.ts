@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { User } from '../models/User.model';
 import { UserService } from '../services/user.service';
 
@@ -8,30 +7,22 @@ import { UserService } from '../services/user.service';
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.css']
 })
-export class UsersListComponent implements OnInit, OnDestroy {
+export class UsersListComponent implements OnInit {
 
   users!: User[];
-  userSubscription!: Subscription;
+  displayedColumns: string[] = ['firstName', 'lastName', 'email'];
   
   constructor(private userService: UserService) { }
-  
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-  }
 
   ngOnInit() {
-    this.userService.getUsers();
-    this.userSubscription = this.userService.usersSubject.subscribe(
-      (users: User[]) => {
-        this.users = users;
+    this.userService.getUsers()
+    .subscribe({
+      next: data => {
+        this.users = data;
       }
-    );
+    });
   }
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'email'];
-
-  doNothing() {
-    
-  }
+  doNothing() {}
 
 }

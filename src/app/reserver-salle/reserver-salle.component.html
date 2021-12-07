@@ -1,0 +1,107 @@
+<mat-toolbar color="primary" class="mat-elevation-z8">
+  <span class="span">Réserver une salle pour une réunion </span>
+</mat-toolbar>
+<mat-card class="example-card">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <br>
+  <form [formGroup]="meetingForm" (ngSubmit)="meetingForm.valid && onSubmitForm()" class="form-container">
+    <div class="parent">
+      <h2>Veuillez choisir une réunion pour réserver sa salle</h2>
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Réunion</mat-label>
+      <mat-select matTooltip="Choisir une réunion pour laquelle il faut réserver une salle"
+        (selectionChange)="selectedReunion($event)" formControlName="reunion">
+        <mat-option *ngFor="let meeting of notReservedMeetings" [value]="meeting.id">
+          Réunion {{meeting.id}} - Nombre de Personnes {{meeting.numberOfPersons}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider inset></mat-divider>
+    <br>
+    <div class="parent">
+      <h2>Salles avec capacité à 70% suffisante et leurs équipements</h2>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Salle</mat-label>
+      <mat-select
+        matTooltip="Choisir d'abord la réunion puis choisir une salle appropriée, les équipements en noir sont ceux déjà présents dans la salle"
+        (selectionChange)="selectedSalle($event)" formControlName="salle">
+        <mat-option *ngFor="let room of roomsForSelectedMeeting" [value]="room.id">
+          Salle {{room.id}} - Capacité à 70% : {{room.capacity70}}
+        </mat-option>
+      </mat-select>
+      <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let roomTool of presentToolTypesInRoom">{{roomTool}}</mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <mat-list role="list" matTooltip="Les équipements en vert sont ceux dont il y a besoin pour la réunion">
+        <mat-list-item role="listitem" *ngFor="let neededTool of neededToolsInRoom" style="color: green;">{{neededTool}}
+        </mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <mat-list role="list" matTooltip="Les équipements en rouge sont ceux qui manquent pour le type de la réunion">
+        <mat-list-item role="listitem" *ngFor="let tool of missingToolTypesInRoom" style="color: crimson;">{{tool}}
+        </mat-list-item>
+      </mat-list>
+    </mat-form-field>
+
+    <mat-divider inset></mat-divider>
+    <br>
+
+    <div class="parent">
+      <h2>Équipements Libres pour la réunion si besoin</h2>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Webcam</mat-label>
+      <mat-select
+        matTooltip="Si la salle n'a pas de webcam nécessaire à la réunion, veuillez choisir une webcam. Pensez à la rendre à la fin de votre réunion !" formControlName="camera">
+        <mat-option *ngFor="let webcam of webcams" [value]="webcam.freeToolId">
+          Équipement Libre {{webcam.freeToolId}} - Type : {{webcam.type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tableau</mat-label>
+      <mat-select
+        matTooltip="Si la salle n'a pas de tableau nécessaire à la réunion, veuillez choisir un tableau. Pensez à le rendre à la fin de votre réunion !" formControlName="board">
+        <mat-option *ngFor="let tableau of tableaux" [value]="tableau.freeToolId">
+          Équipement Libre {{tableau.freeToolId}} - Type : {{tableau.type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Pieuvre</mat-label>
+      <mat-select
+        matTooltip="Si la salle n'a pas de pieuvre nécessaire à la réunion, veuillez choisir une pieuvre. Pensez à la rendre à la fin de votre réunion !" formControlName="octopus">
+        <mat-option *ngFor="let pieuvre of pieuvres" [value]="pieuvre.freeToolId">
+          Pieuvre {{pieuvre.freeToolId}} - Type : {{pieuvre.type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Ecran</mat-label>
+      <mat-select
+        matTooltip="Si la salle n'a pas d'écran nécessaire à la réunion, veuillez choisir un écran. Pensez à le rendre à la fin de votre réunion !" formControlName="screen">
+        <mat-option *ngFor="let ecran of ecrans" [value]="ecran.freeToolId">
+          Ecran {{ecran.freeToolId}} - Type : {{ecran.type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider inset></mat-divider>
+
+    <br>
+    <div class="parent"> <button mat-raised-button color="primary" type="submit" [disabled]="meetingForm.invalid">
+        Soumettre</button>
+    </div>
+
+
+
+
+    <br>
+  </form>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</mat-card>

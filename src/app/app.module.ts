@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
-import { ToolsViewComponent } from './tools-view/tools-view.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NewUserComponent } from './new-user/new-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,10 +15,14 @@ import { MeetingService } from './services/meeting.service';
 import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
 import { SallesReserveesComponent } from './salles-reservees/salles-reservees.component';
 import { SallesNonReserveesComponent } from './test/salles-non-reservees.component';
+import { ReserverSalleComponent } from './reserver-salle/reserver-salle.component';
+import { RoomService } from './services/room.service';
+import { FreeToolService } from './services/free-tool.service';
 
 const appRoutes: Routes = [
   { path: '', component: SallesNonReserveesComponent },
   { path: 'salles-non-reservees', component: SallesNonReserveesComponent },
+  { path: 'reserver-salle', component: ReserverSalleComponent },
   { path: 'salles-reservees', component: SallesReserveesComponent },
   { path: 'new-user', component: NewUserComponent },
   { path: 'users', component: UsersListComponent },
@@ -27,11 +30,11 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ToolsViewComponent,
     SallesNonReserveesComponent,
     NewUserComponent,
     UsersListComponent,
-    SallesReserveesComponent
+    SallesReserveesComponent,
+    ReserverSalleComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [UserService, MeetingService, {
+  providers: [UserService, MeetingService, RoomService, FreeToolService, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,
     multi: true

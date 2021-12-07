@@ -12,7 +12,7 @@ export class Meeting {
         public startHour: number,
         public endHour: number,
         public numberOfPersons: number,
-        public reserved: boolean,
+        public isReserved: boolean,
         @Optional() public roomDto: Room,
         public freeToolDtos: FreeTool[]
     ) {

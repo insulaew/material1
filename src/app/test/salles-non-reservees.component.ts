@@ -11,10 +11,9 @@ import { MeetingService } from '../services/meeting.service';
 })
 export class SallesNonReserveesComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'startHour', 'type', 'numberOfPersons', 'reserved'];
+  displayedColumns: string[] = ['id', 'startHour', 'type', 'numberOfPersons', 'isReserved'];
 
   meetings!: Meeting[];
-  meetingSubscription!: Subscription;
 
   constructor(
     private dialog: MatDialog,
@@ -22,12 +21,12 @@ export class SallesNonReserveesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.meetingService.getNotReservedMeetings();
-    this.meetingSubscription = this.meetingService.meetingsSubject.subscribe(
-      (meetings: Meeting[]) => {
-        this.meetings = meetings;
+    this.meetingService.getNotReservedMeetings().subscribe({
+      next: data => {
+        this.meetings = data;
+        this.meetings.sort((x, y) => (x.id < y.id) ? -1 : 1);
       }
-    );
+    });
   }
 
   openDialog(element: Meeting) {

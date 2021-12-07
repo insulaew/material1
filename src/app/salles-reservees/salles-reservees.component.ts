@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 import { Meeting } from '../models/Meeting.model';
-import { RoomTool } from '../models/RoomTool.model';
 import { MeetingService } from '../services/meeting.service';
 
 @Component({
@@ -12,10 +10,9 @@ import { MeetingService } from '../services/meeting.service';
 })
 export class SallesReserveesComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'startHour', 'type', 'roomDto', 'numberOfPersons', 'reserved', 'userDto'];
+  displayedColumns: string[] = ['id', 'startHour', 'type', 'roomDto', 'numberOfPersons', 'isReserved', 'userDto'];
 
   meetings!: Meeting[];
-  meetingSubscription!: Subscription;
   
   constructor(
     private dialog: MatDialog,
@@ -23,16 +20,16 @@ export class SallesReserveesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.meetingService.getReservedMeetings();
-    this.meetingSubscription = this.meetingService.meetingsSubject.subscribe(
-      (meetings: Meeting[]) => {
-        this.meetings = meetings;
+    this.meetingService.getReservedMeetings().subscribe({
+      next: data => {
+        this.meetings = data;
+        this.meetings = this.meetings.sort((x, y) => (x.id < y.id) ? -1 : 1);
       }
-    );
+    });
   }
 
   openDialog(element: Meeting) {
-    const dialogRef = this.dialog.open(DialogContentExampleDialog,
+    const dialogRef = this.dialog.open(DialogContentReservedRooms,
       {
         data: element
       });
@@ -45,13 +42,14 @@ export class SallesReserveesComponent implements OnInit {
   templateUrl: 'dialog-content-example-dialog.html',
 })
 
-export class DialogContentExampleDialog implements OnInit {
+export class DialogContentReservedRooms implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: Meeting) { }
 
   tools!: string[];
   user = this.data.userDto;
   room = this.data.roomDto;
   roomTools = JSON.stringify(this.data.roomDto.roomToolDtos);
+  freeTools = JSON.stringify(this.data.freeToolDtos);
 
   ngOnInit() {
 

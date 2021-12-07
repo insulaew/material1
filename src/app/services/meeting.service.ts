@@ -1,51 +1,44 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 import { Meeting } from "../models/Meeting.model";
 
 @Injectable()
 export class MeetingService {
 
-	meetingsSubject = new Subject<any[]>();
-	private meetings!: Meeting[];
-
 	constructor(
-		private httpClient: HttpClient
+		private httpClient: HttpClient,
+		private router: Router,
+		private _snackBar: MatSnackBar
 	) { }
 
-	emitMeetings() {
-		this.meetingsSubject.next(this.meetings.slice());
+	openSnackBar() {
+		this._snackBar.open('Réunion réservée !', 'Undo', {
+			duration: 3000
+		});
 	}
 
 	getMeetings() {
-		this.httpClient.get<any>('http://localhost:9097/api/Reunions')
-			.subscribe({
-				next: data => {
-					console.log(data);
-					this.meetings = data;
-					this.emitMeetings();
-				}
-			});
+		return this.httpClient.get<Meeting[]>('http://localhost:9099/api/Reunions');
 	}
 
+
 	getNotReservedMeetings() {
-		this.httpClient.get<any>('http://localhost:9097/api/ReunionsNonReservees')
-			.subscribe({
-				next: data => {
-					console.log(data);
-					this.meetings = data;
-					this.emitMeetings();
-				}
-			});
+		return this.httpClient.get<any>('http://localhost:9099/api/ReunionsNonReservees');
 	}
 
 	getReservedMeetings() {
-		this.httpClient.get<any>('http://localhost:9097/api/ReunionsReservees')
+		return this.httpClient.get<any>('http://localhost:9099/api/ReunionsReservees');
+	}
+
+	reserveMeeting(meeting: Meeting) {
+		this.httpClient.post<any>('http://localhost:9099/api/Reunion', meeting, { observe: "body", responseType: "json" })
 			.subscribe({
 				next: data => {
 					console.log(data);
-					this.meetings = data;
-					this.emitMeetings();
+					this.openSnackBar();
+					this.router.navigate(['salles-reservees']);
 				}
 			});
 	}

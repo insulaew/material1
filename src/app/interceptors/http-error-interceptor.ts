@@ -39,7 +39,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   openDialog(element: any) {
-    const dialogRef = this.dialog.open(DialogContentExampleDialog,
+    const dialogRef = this.dialog.open(DialogContentCreateUser,
       {
         data: element
       });
@@ -50,7 +50,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   selector: 'dialog-content-example-dialog',
   templateUrl: 'dialog-content-example-dialog.html',
 })
-export class DialogContentExampleDialog {
+export class DialogContentCreateUser {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
 }
