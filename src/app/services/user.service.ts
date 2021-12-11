@@ -21,7 +21,7 @@ export class UserService {
 		this.httpClient.post<any>('http://localhost:9099/api/Utilisateur', user, { observe: "body", responseType: "json" })
 			.subscribe({
 				next: data => {
-					console.log(data);
+					//console.log(data);
 					this.openSnackBar();
 					this.router.navigate(['/users']);
 				}

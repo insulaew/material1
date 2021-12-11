@@ -14,10 +14,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MeetingService } from './services/meeting.service';
 import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
 import { SallesReserveesComponent } from './salles-reservees/salles-reservees.component';
-import { SallesNonReserveesComponent } from './test/salles-non-reservees.component';
+import { SallesNonReserveesComponent } from './salles-non-reservees/salles-non-reservees.component';
 import { ReserverSalleComponent } from './reserver-salle/reserver-salle.component';
 import { RoomService } from './services/room.service';
 import { FreeToolService } from './services/free-tool.service';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth-service';
+import { AnnulerReservationComponent } from './annuler-reservation/annuler-reservation.component';
 
 const appRoutes: Routes = [
   { path: '', component: SallesNonReserveesComponent },
@@ -26,6 +29,8 @@ const appRoutes: Routes = [
   { path: 'salles-reservees', component: SallesReserveesComponent },
   { path: 'new-user', component: NewUserComponent },
   { path: 'users', component: UsersListComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'annuler-reservation', component: AnnulerReservationComponent },
 ]
 @NgModule({
   declarations: [
@@ -34,7 +39,9 @@ const appRoutes: Routes = [
     NewUserComponent,
     UsersListComponent,
     SallesReserveesComponent,
-    ReserverSalleComponent
+    ReserverSalleComponent,
+    LoginComponent,
+    AnnulerReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +57,7 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [UserService, MeetingService, RoomService, FreeToolService, {
+  providers: [UserService, MeetingService, RoomService, FreeToolService, AuthService, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,
     multi: true

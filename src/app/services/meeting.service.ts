@@ -19,6 +19,12 @@ export class MeetingService {
 		});
 	}
 
+	openSnackBar2() {
+		this._snackBar.open('Réunion annulée !', 'Undo', {
+			duration: 3000
+		});
+	}
+
 	getMeetings() {
 		return this.httpClient.get<Meeting[]>('http://localhost:9099/api/Reunions');
 	}
@@ -36,8 +42,19 @@ export class MeetingService {
 		this.httpClient.post<any>('http://localhost:9099/api/Reunion', meeting, { observe: "body", responseType: "json" })
 			.subscribe({
 				next: data => {
-					console.log(data);
+					//console.log(data);
 					this.openSnackBar();
+					this.router.navigate(['salles-reservees']);
+				}
+			});
+	}
+
+	cancelMeeting(meeting: Meeting) {
+		this.httpClient.put<any>('http://localhost:9099/api/Reunion', meeting, { observe: "body", responseType: "json" })
+			.subscribe({
+				next: data => {
+					//console.log(data);
+					this.openSnackBar2();
 					this.router.navigate(['salles-reservees']);
 				}
 			});

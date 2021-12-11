@@ -112,12 +112,12 @@ export class ReserverSalleComponent implements OnInit {
     this.roomService.getRoomsCompatibleForMeeting(numberOfPersons, meetingStartHour)
     .subscribe({
       next: data => {
-        console.log(data.length)
+        //console.log(data.length)
         if (data.length == 0) {
           this.roomService.getRoomsCompatibleForMeetingEmergency(numberOfPersons, meetingStartHour)
           .subscribe({
             next: data2 => {
-              console.log(data2)
+              //console.log(data2)
               this.roomsForSelectedMeeting = data2;
             }
           });
@@ -129,6 +129,10 @@ export class ReserverSalleComponent implements OnInit {
   }
 
   selectedReunion(event: MatSelectChange) {
+    this.ecrans = [];
+    this.pieuvres = [];
+    this.tableaux = [];
+    this.webcams = [];
     this.presentToolTypesInRoom = [];
     this.neededToolsInRoom = [];
     this.missingToolTypesInRoom = [];
@@ -204,15 +208,19 @@ export class ReserverSalleComponent implements OnInit {
           switch(freeToolType) {
             case 'Pieuvre':
               this.pieuvres = data;
+              console.log(JSON.stringify(this.pieuvres))
               break;
             case 'Ecran':
               this.ecrans = data;
+              console.log(JSON.stringify(this.ecrans))
               break;
             case 'Tableau':
               this.tableaux = data;
+              console.log(JSON.stringify(this.tableaux))
               break;
             case 'Webcam':
               this.webcams = data;
+              console.log(JSON.stringify(this.webcams))
               break;
           }
         }
