@@ -1,27 +1,42 @@
-# Material1
+# CanalPlusProject réalisé par Nicolas SIVIGNON © Copyright
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.3.
+## Environnement de travail
 
-## Development server
+### Matériel
+- McBook Pro 2020 (puce Apple M1 arm64)
+- macOS Monterey 12.0.1
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Environnement et outils back-end
+- Java version 11 (OpenJDK Runtime Environment Temurin-11.0.13)
+- Javac Compiler
+- Maven 3.8.1
+- Spring Boot 2.6.1
+- IntelliJ IDEA Community Edition
 
-## Code scaffolding
+### Dépendances back-end
+- Spring Boot Web
+- Spring Boot Data JPA
+- Postgre SQL
+- Spring Test
+- Spring Validation
+- Spring Security
+- JUnit
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Environnement et outils front-end
+- NPM 8.1.0
+- Node.js 16.13.0
+- Angular CLI 13.0.3
+- Visual Studio Code
 
-## Build
+### Dépendances front-end
+- @angular/cdk 13.0.2
+- @angular/flex-layout ^12.0.0-beta.35
+- @angular/material 13.0.2
+- hammerjs ^2.0.8
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Base de données
+- PostgreSQL 14
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Versioning
+- Git 2.34.0
+- GitKraken 8.1.1
