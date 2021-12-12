@@ -7,9 +7,7 @@ export class Room {
         public capacity: number,
         public capacity70: number,
         public roomToolDtos: RoomTool[],
-        public meetingsIds: number[]
-        
-    ) {
-
+        public meetingsIds: number[]) {
     }
+
 }

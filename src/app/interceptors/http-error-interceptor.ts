@@ -3,6 +3,7 @@ import { Component, Inject, Injectable } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { JwtResponse } from '../models/JwtResponse.model';
 import { TokenStorageService } from '../services/token-storage.service';
 
 interface APIErrorResponse extends HttpErrorResponse {
@@ -21,17 +22,19 @@ interface APIErrorResponse extends HttpErrorResponse {
   }
 }
 
-const TOKEN_HEADER_KEY = 'x-access-token';
+const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private dialog: MatDialog,
-    private token: TokenStorageService
-  ) { }
+    private token: TokenStorageService) { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    /**Intercepte toutes les requêtes HTTP pour y mettre un token d'identification et éventuellement 
+     * attraper et renvoyer les erreurs.
+     */
+  intercept(request: HttpRequest<JwtResponse>, next: HttpHandler): Observable<HttpEvent<JwtResponse>> {
     let authReq = request;
     const token = this.token.getToken();
 
@@ -39,7 +42,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       authReq = request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
     }
 
-    return next.handle(request)
+    return next.handle(authReq)
       .pipe(
         catchError((error: APIErrorResponse) => {
           console.log(error.error);
@@ -55,6 +58,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         data: element
       });
   }
+
 }
 
 @Component({

@@ -10,7 +10,7 @@
     <button mat-button routerLink="/users">Liste Utilisateurs</button>
     <button mat-button routerLink="/new-user">Créer un compte</button>
     <button mat-button routerLink="/login">S'identifier</button>
-    <button mat-button routerLink="/auth">Se déconnecter</button>
+    <button mat-button (click)="logout()">Se déconnecter</button>
   </div>
 </mat-toolbar>
 

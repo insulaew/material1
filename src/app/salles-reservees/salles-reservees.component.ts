@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FreeTool } from '../models/FreeTool.model';
 import { Meeting } from '../models/Meeting.model';
-import { RoomTool } from '../models/RoomTool.model';
 import { MeetingService } from '../services/meeting.service';
 
 @Component({
@@ -15,12 +13,12 @@ export class SallesReserveesComponent implements OnInit {
   displayedColumns: string[] = ['id', 'startHour', 'type', 'roomDto', 'numberOfPersons', 'isReserved', 'userDto'];
 
   meetings!: Meeting[];
-  
+
   constructor(
     private dialog: MatDialog,
-    private meetingService: MeetingService
-  ) { }
+    private meetingService: MeetingService) { }
 
+  /**On trie les réunions réservées par ordre croissant des ids. */
   ngOnInit() {
     this.meetingService.getReservedMeetings().subscribe({
       next: data => {
@@ -54,7 +52,6 @@ export class DialogContentReservedRooms implements OnInit {
   freeTools = JSON.stringify(this.data.freeToolDtos);
 
   ngOnInit() {
-
     switch (this.data.type) {
       case 'VC': {
         this.tools = ['Pieuvre', 'Ecran', 'Webcam'];
@@ -74,4 +71,5 @@ export class DialogContentReservedRooms implements OnInit {
       }
     }
   }
+
 }

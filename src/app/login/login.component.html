@@ -1,46 +1,38 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
     <span class="span">Connexion sur le site </span>
-  </mat-toolbar>
+</mat-toolbar>
 
-  <mat-card class="example-card">
+<mat-card class="example-card">
     <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && onSubmitForm()" class="form-container">
         <div class="parent">
             <h2>Veuillez renseigner vos identifiants utilisateur</h2>
         </div>
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         <br>
-            <mat-form-field appearance="fill">
-                <mat-label for="email">Email:</mat-label>
-                <input matInput class="form-control"
-                type="text" 
-                id="email"
-                formControlName="email">
-            </mat-form-field>
-    
-            <mat-divider inset></mat-divider>
-    <br>
-            <mat-form-field appearance="fill">
-                <mat-label for="password">Mot de passe:</mat-label>
-                <input matInput class="form-control"
-                type="text" 
-                id="password"
-                formControlName="password">
-            </mat-form-field>
-    
-            <mat-divider inset></mat-divider>
-    
-    <br>
-            <div class="parent">        <button mat-raised-button color="primary"
-                type="submit"
-                [disabled]="loginForm.invalid">
-        Soumettre</button>
-    </div>
-    <br>
-            </form>
-    
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    
-            </mat-card>
+        <mat-form-field appearance="fill">
+            <mat-label for="email">Email:</mat-label>
+            <input matInput class="form-control" type="text" id="email" formControlName="email">
+        </mat-form-field>
+
+        <mat-divider inset></mat-divider>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label for="password">Mot de passe:</mat-label>
+            <input matInput class="form-control" type="text" id="password" formControlName="password">
+        </mat-form-field>
+
+        <mat-divider inset></mat-divider>
+
+        <br>
+        <div class="parent"> <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
+                Soumettre</button>
+        </div>
+        <br>
+    </form>
+
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
+</mat-card>
     
             
     

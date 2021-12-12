@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { User } from '../models/User.model';
+
+const MEETING_PLANNER_API = 'http://localhost:9099/api/';
 
 @Injectable()
 export class UserService {
@@ -17,19 +20,20 @@ export class UserService {
 		});
 	}
 
-	addUser(user: any) {
-		this.httpClient.post<any>('http://localhost:9099/api/Utilisateur', user, { observe: "body", responseType: "json" })
+	/**On sauvegarde un nouvel utilisateur en base de données. */
+	addUser(user: User) {
+		this.httpClient.post<User>(MEETING_PLANNER_API + 'Utilisateur', user)
 			.subscribe({
 				next: data => {
-					//console.log(data);
 					this.openSnackBar();
 					this.router.navigate(['/users']);
 				}
 			});
 	}
 
+	/**On récupère tous les utilisateurs en base de données. */
 	getUsers() {
-		return this.httpClient.get<any>('http://localhost:9099/api/Utilisateurs');
+		return this.httpClient.get<any>(MEETING_PLANNER_API + 'Utilisateurs');
 	}
 
 }

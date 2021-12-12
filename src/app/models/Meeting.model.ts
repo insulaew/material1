@@ -14,8 +14,7 @@ export class Meeting {
         public numberOfPersons: number,
         public isReserved: boolean,
         @Optional() public roomDto: Room,
-        public freeToolDtos: FreeTool[]
-    ) {
-
+        public freeToolDtos: FreeTool[]) {
     }
+
 }

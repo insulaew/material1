@@ -3,8 +3,7 @@ export class RoomTool {
     constructor(
         public roomToolId: number,
         public type: string,
-        public roomId: number
-    ) {
-
+        public roomId: number) {
     }
+    
 }

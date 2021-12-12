@@ -67,6 +67,7 @@ export class ReserverSalleComponent implements OnInit {
   }
 
   initForm() {
+    console.log(window.sessionStorage.getItem('auth-user'))
     this.meetingForm = this.formBuilder.group({
       reunion: ['', Validators.required],
       salle: ['', Validators.required],

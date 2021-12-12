@@ -1,35 +1,31 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
-    <span class="span">Annuler une réservation </span>
-  </mat-toolbar>
-  <mat-card class="example-card">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <span class="span">Annuler une réservation </span>
+</mat-toolbar>
+<mat-card class="example-card">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <br>
+  <form [formGroup]="meetingForm" (ngSubmit)="meetingForm.valid && onSubmitForm()" class="form-container">
+    <div class="parent">
+      <h2>Veuillez choisir la réunion dont il faut annuler la réservation</h2>
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Réunion</mat-label>
+      <mat-select matTooltip="Choisir une réunion dont il faut annuler la réservation"
+        (selectionChange)="selectedReunion($event)" formControlName="reunion">
+        <mat-option *ngFor="let meeting of reservedMeetings" [value]="meeting.id">
+          Réunion {{meeting.id}} - Nombre de Personnes {{meeting.numberOfPersons}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider inset></mat-divider>
     <br>
-    <form [formGroup]="meetingForm" (ngSubmit)="meetingForm.valid && onSubmitForm()" class="form-container">
-      <div class="parent">
-        <h2>Veuillez choisir la réunion dont il faut annuler la réservation</h2>
-      </div>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Réunion</mat-label>
-        <mat-select matTooltip="Choisir une réunion dont il faut annuler la réservation"
-          (selectionChange)="selectedReunion($event)" formControlName="reunion">
-          <mat-option *ngFor="let meeting of reservedMeetings" [value]="meeting.id">
-            Réunion {{meeting.id}} - Nombre de Personnes {{meeting.numberOfPersons}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-divider inset></mat-divider>
-      <br>
-      
-      <div class="parent"> <button mat-raised-button color="primary" type="submit" [disabled]="meetingForm.invalid">
-          Soumettre</button>
-      </div>
-  
-  
-  
-  
-      <br>
-    </form>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </mat-card>
+
+    <div class="parent"> <button mat-raised-button color="primary" type="submit" [disabled]="meetingForm.invalid">
+        Soumettre</button>
+    </div>
+    <br>
+  </form>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</mat-card>

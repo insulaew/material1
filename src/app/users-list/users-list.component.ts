@@ -11,18 +11,21 @@ export class UsersListComponent implements OnInit {
 
   users!: User[];
   displayedColumns: string[] = ['firstName', 'lastName', 'email'];
-  
-  constructor(private userService: UserService) { }
 
+  constructor(
+    private userService: UserService) { }
+
+  /** On récupère la liste des utilisateurs en base de données. */
   ngOnInit() {
     this.userService.getUsers()
-    .subscribe({
-      next: data => {
-        this.users = data;
-      }
-    });
+      .subscribe({
+        next: data => {
+          this.users = data;
+        }
+      });
   }
 
-  doNothing() {}
+  /** Méthode qui ne fait rien uniquement pour rendre cliquable les lignes du tableau. */
+  doNothing() { }
 
 }

@@ -21,16 +21,18 @@ import { FreeToolService } from './services/free-tool.service';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth-service';
 import { AnnulerReservationComponent } from './annuler-reservation/annuler-reservation.component';
+import { TokenStorageService } from './services/token-storage.service';
+import { AuthGuard } from './services/auth-guard.service';
 
 const appRoutes: Routes = [
   { path: '', component: SallesNonReserveesComponent },
   { path: 'salles-non-reservees', component: SallesNonReserveesComponent },
-  { path: 'reserver-salle', component: ReserverSalleComponent },
+  { path: 'reserver-salle', canActivate: [AuthGuard], component: ReserverSalleComponent },
   { path: 'salles-reservees', component: SallesReserveesComponent },
   { path: 'new-user', component: NewUserComponent },
   { path: 'users', component: UsersListComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'annuler-reservation', component: AnnulerReservationComponent },
+  { path: 'annuler-reservation', canActivate: [AuthGuard], component: AnnulerReservationComponent },
 ]
 @NgModule({
   declarations: [
@@ -52,12 +54,9 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
+    RouterModule.forRoot(appRoutes)
   ],
-  providers: [UserService, MeetingService, RoomService, FreeToolService, AuthService, {
+  providers: [UserService, MeetingService, RoomService, FreeToolService, AuthService, TokenStorageService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,
     multi: true

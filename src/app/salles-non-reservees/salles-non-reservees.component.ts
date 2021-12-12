@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 import { Meeting } from '../models/Meeting.model';
 import { MeetingService } from '../services/meeting.service';
 
@@ -17,9 +16,9 @@ export class SallesNonReserveesComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private meetingService: MeetingService
-  ) { }
+    private meetingService: MeetingService) { }
 
+  /**On récupère les réunions non réséervées en base de données et on les trie par ids croissants. */
   ngOnInit() {
     this.meetingService.getNotReservedMeetings().subscribe({
       next: data => {
@@ -35,6 +34,7 @@ export class SallesNonReserveesComponent implements OnInit {
         data: element
       });
   }
+
 }
 
 @Component({
@@ -68,5 +68,6 @@ export class DialogContentExampleDialog implements OnInit {
       }
     }
   }
+
 }
 

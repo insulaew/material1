@@ -17,8 +17,7 @@ export class AnnulerReservationComponent implements OnInit {
   
   constructor(
     private formBuilder: FormBuilder,
-    private meetingService: MeetingService,
-  ) { }
+    private meetingService: MeetingService) { }
 
   ngOnInit(): void {
     this.meetingService.getReservedMeetings().subscribe({
@@ -35,14 +34,14 @@ export class AnnulerReservationComponent implements OnInit {
     });
   }
 
+  /**On modifie la réunion en base de données pour annuler la réservation. */
   onSubmitForm() {
     this.meetingToCancel.freeToolDtos = [];
     this.meetingToCancel.isReserved = false;
-    console.log(this.meetingForm.value)
-    console.log(JSON.stringify(this.meetingToCancel));
     this.meetingService.cancelMeeting(this.meetingToCancel);
   }
 
+  /**On récupère les réunions réservées en base de données. */
   selectedReunion(event: MatSelectChange) {
     this.reservedMeetings.forEach((meetingToCancel: Meeting) => {
       if (meetingToCancel.id == event.value) {

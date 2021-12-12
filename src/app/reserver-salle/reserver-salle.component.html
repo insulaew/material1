@@ -58,7 +58,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Webcam</mat-label>
       <mat-select
-        matTooltip="Si la salle n'a pas de webcam nécessaire à la réunion, veuillez choisir une webcam. Pensez à la rendre à la fin de votre réunion ! Le trèfle indique qu'un équipement a déjà un nombre donnée de réservations." formControlName="camera">
+        matTooltip="Si la salle n'a pas de webcam nécessaire à la réunion, veuillez choisir une webcam. Pensez à la rendre à la fin de votre réunion ! Le trèfle indique qu'un équipement a déjà un nombre donné de réservations." formControlName="camera">
         <mat-option *ngFor="let webcam of webcams" [value]="webcam.freeToolId">
           Équipement Libre {{webcam.freeToolId}} - Type : {{webcam.type}}
           <span *ngIf="webcam.meetingsIds.length>0">- &#9827; {{webcam.meetingsIds.length}}</span>
@@ -68,7 +68,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Tableau</mat-label>
       <mat-select
-        matTooltip="Si la salle n'a pas de tableau nécessaire à la réunion, veuillez choisir un tableau. Pensez à le rendre à la fin de votre réunion ! Le trèfle indique qu'un équipement a déjà un nombre donnée de réservations." formControlName="board">
+        matTooltip="Si la salle n'a pas de tableau nécessaire à la réunion, veuillez choisir un tableau. Pensez à le rendre à la fin de votre réunion ! Le trèfle indique qu'un équipement a déjà un nombre donné de réservations." formControlName="board">
         <mat-option *ngFor="let tableau of tableaux" [value]="tableau.freeToolId">
           Équipement Libre {{tableau.freeToolId}} - Type : {{tableau.type}}
           <span *ngIf="tableau.meetingsIds.length>0">- &#9827; {{tableau.meetingsIds.length}}</span>
@@ -78,7 +78,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Pieuvre</mat-label>
       <mat-select
-        matTooltip="Si la salle n'a pas de pieuvre nécessaire à la réunion, veuillez choisir une pieuvre. Pensez à la rendre à la fin de votre réunion ! Le trèfle indique qu'un équipement a déjà un nombre donnée de réservations." formControlName="octopus">
+        matTooltip="Si la salle n'a pas de pieuvre nécessaire à la réunion, veuillez choisir une pieuvre. Pensez à la rendre à la fin de votre réunion ! Le trèfle indique qu'un équipement a déjà un nombre donné de réservations." formControlName="octopus">
         <mat-option *ngFor="let pieuvre of pieuvres" [value]="pieuvre.freeToolId">
           Pieuvre {{pieuvre.freeToolId}} - Type : {{pieuvre.type}}
           <span *ngIf="pieuvre.meetingsIds.length>0">- &#9827; {{pieuvre.meetingsIds.length}}</span>
@@ -88,7 +88,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Ecran</mat-label>
       <mat-select
-        matTooltip="Si la salle n'a pas d'écran nécessaire à la réunion, veuillez choisir un écran. Pensez à le rendre à la fin de votre réunion ! Le trèfle indique qu'un équipement a déjà un nombre donnée de réservations." formControlName="screen">
+        matTooltip="Si la salle n'a pas d'écran nécessaire à la réunion, veuillez choisir un écran. Pensez à le rendre à la fin de votre réunion ! Le trèfle indique qu'un équipement a déjà un nombre donné de réservations." formControlName="screen">
         <mat-option *ngFor="let ecran of ecrans" [value]="ecran.freeToolId">
           Ecran {{ecran.freeToolId}} - Type : {{ecran.type}}
           <span *ngIf="ecran.meetingsIds.length>0">- &#9827; {{ecran.meetingsIds.length}}</span>

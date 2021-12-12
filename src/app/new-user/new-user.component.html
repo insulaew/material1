@@ -1,64 +1,50 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
-    <span class="span">Inscription sur le site </span>
-  </mat-toolbar>
+	<span class="span">Inscription sur le site </span>
+</mat-toolbar>
 <mat-card class="example-card">
-<form [formGroup]="userForm" (ngSubmit)="userForm.valid && onSubmitForm()" class="form-container">
-        <div class="parent">
-            <h2>Veuillez compléter le formulaire pour créer votre compte utilisateur</h2>
-        </div>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+	<form [formGroup]="userForm" (ngSubmit)="userForm.valid && onSubmitForm()" class="form-container">
+		<div class="parent">
+			<h2>Veuillez compléter le formulaire pour créer votre compte utilisateur</h2>
+		</div>
+		<mat-progress-bar mode="indeterminate"></mat-progress-bar>
 		<br>
 		<mat-form-field appearance="fill">
 			<mat-label for="firstName">Prénom:</mat-label>
-			<input matInput class="form-control"
-			type="text" 
-			id="firstName"
-			formControlName="firstName">
-        </mat-form-field>
+			<input matInput class="form-control" type="text" id="firstName" formControlName="firstName">
+		</mat-form-field>
 
-        <mat-divider inset></mat-divider>
-<br>
+		<mat-divider inset></mat-divider>
+		<br>
 		<mat-form-field appearance="fill">
 			<mat-label for="lastName">Nom:</mat-label>
-			<input matInput class="form-control"
-			type="text" 
-			id="lastName"
-			formControlName="lastName">
-        </mat-form-field>
+			<input matInput class="form-control" type="text" id="lastName" formControlName="lastName">
+		</mat-form-field>
 
-        <mat-divider inset></mat-divider>
-<br>
+		<mat-divider inset></mat-divider>
+		<br>
 		<mat-form-field appearance="fill">
 			<mat-label for="email">Email:</mat-label>
-			<input matInput class="form-control"
-			type="text" 
-			id="email"
-			formControlName="email">
-        </mat-form-field>
+			<input matInput class="form-control" type="text" id="email" formControlName="email">
+		</mat-form-field>
 
-        <mat-divider inset></mat-divider>
-<br>
+		<mat-divider inset></mat-divider>
+		<br>
 		<mat-form-field appearance="fill">
 			<mat-label for="password">Mot de passe:</mat-label>
-			<input matInput class="form-control"
-			type="text" 
-			id="password"
-			formControlName="password">
-        </mat-form-field>
+			<input matInput class="form-control" type="text" id="password" formControlName="password">
+		</mat-form-field>
 
-        <mat-divider inset></mat-divider>
+		<mat-divider inset></mat-divider>
 
-<br>
-        <div class="parent">        <button mat-raised-button color="primary"
-            type="submit"
-            [disabled]="userForm.invalid">
-    Soumettre</button>
-</div>
-<br>
-        </form>
+		<br>
+		<div class="parent"> <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
+				Soumettre</button>
+		</div>
+		<br>
+	</form>
 
-			<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+	<mat-progress-bar mode="indeterminate"></mat-progress-bar>
 
-		</mat-card>
+</mat-card>
 
         

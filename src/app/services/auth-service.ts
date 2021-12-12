@@ -1,30 +1,23 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { User } from "../models/User.model";
+import { JwtResponse } from "../models/JwtResponse.model";
 
-const AUTH_API = 'http://localhost:9099/api/auth/';
-
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+const AUTH_API = 'http://localhost:9099/api/';
 
 @Injectable()
 export class AuthService {
 
-    constructor(
-        private http: HttpClient,
-        private router: Router,
-        private _snackBar: MatSnackBar
-    ) { }
+    isAuth: boolean = false;
 
-    login(username: string, password: string): Observable<any> {
-        return this.http.post(AUTH_API + 'signin', {
+    constructor(
+        private http: HttpClient) { }
+
+    /**On s'authentifie auprès du client. */
+    login(username: string, password: string) {
+        return this.http.post<JwtResponse>(AUTH_API + 'Connexion', {
             username,
             password
-        }, httpOptions);
+        });
     }
 
 }

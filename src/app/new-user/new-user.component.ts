@@ -31,6 +31,7 @@ export class NewUserComponent implements OnInit {
     );
   }
 
+  /**On sauvegarde un nouvel utilisateur en base de données. */
   onSubmitForm() {
     const formValue = this.userForm.value;
     const newUser = new User(
@@ -41,7 +42,7 @@ export class NewUserComponent implements OnInit {
       formValue['password'],
       []
     );
-    console.log(JSON.stringify(newUser));
     this.userService.addUser(newUser);
   }
+
 }

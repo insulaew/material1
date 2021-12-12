@@ -1,52 +1,52 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
-    <span class="span">Liste des réunions avec salle déjà réservée </span>
-  </mat-toolbar>
-  <table mat-table [dataSource]="meetings" class="mat-elevation-z8 demo-table">
-      <!-- Position Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>Numéro</th>
-        <td mat-cell *matCellDef="let element">Réunion {{element.id}}</td>
-      </ng-container>
-    
-      <!-- Name Column -->
-      <ng-container matColumnDef="startHour">
-        <th mat-header-cell *matHeaderCellDef>Heure</th>
-        <td mat-cell *matCellDef="let element">{{element.startHour}}H-{{element.endHour}}H</td>
-      </ng-container>
-    
-      <!-- Weight Column -->
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef>Type</th>
-        <td mat-cell *matCellDef="let element">{{element.type}}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="roomDto">
-        <th mat-header-cell *matHeaderCellDef>Code de la Salle</th>
-        <td mat-cell *matCellDef="let element">{{element.roomDto.id}}</td>
-      </ng-container>
-    
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="numberOfPersons">
-        <th mat-header-cell *matHeaderCellDef>Personnes conviées</th>
-        <td mat-cell *matCellDef="let element">{{element.numberOfPersons}}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="isReserved">
-        <th mat-header-cell *matHeaderCellDef>Réservation</th>
-        <td mat-cell *matCellDef="let element">
-          <mat-checkbox [checked]="element.isReserved" disabled></mat-checkbox></td>
-      </ng-container>
+  <span class="span">Liste des réunions avec salle déjà réservée </span>
+</mat-toolbar>
+<table mat-table [dataSource]="meetings" class="mat-elevation-z8 demo-table">
 
-      <ng-container matColumnDef="userDto">
-        <th mat-header-cell *matHeaderCellDef>Réservé par :</th>
-        <td mat-cell *matCellDef="let element"><div class="contact">{{element.userDto.firstName}} {{element.userDto.lastName}} - mail: {{element.userDto.email}}</div></td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-          mat-row
-          (click)="openDialog(row)"
-          *matRowDef="let row; columns: displayedColumns;"
-          matTooltip="Cliquez dessus la réunion pour avoir plus d'infos"
-      ></tr>
-    </table>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>Numéro</th>
+    <td mat-cell *matCellDef="let element">Réunion {{element.id}}</td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="startHour">
+    <th mat-header-cell *matHeaderCellDef>Heure</th>
+    <td mat-cell *matCellDef="let element">{{element.startHour}}H-{{element.endHour}}H</td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef>Type</th>
+    <td mat-cell *matCellDef="let element">{{element.type}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="roomDto">
+    <th mat-header-cell *matHeaderCellDef>Code de la Salle</th>
+    <td mat-cell *matCellDef="let element">{{element.roomDto.id}}</td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="numberOfPersons">
+    <th mat-header-cell *matHeaderCellDef>Personnes conviées</th>
+    <td mat-cell *matCellDef="let element">{{element.numberOfPersons}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="isReserved">
+    <th mat-header-cell *matHeaderCellDef>Réservation</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-checkbox [checked]="element.isReserved" disabled></mat-checkbox>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="userDto">
+    <th mat-header-cell *matHeaderCellDef>Réservé par :</th>
+    <td mat-cell *matCellDef="let element">
+      <div class="contact">{{element.userDto.firstName}} {{element.userDto.lastName}} - mail: {{element.userDto.email}}
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row (click)="openDialog(row)" *matRowDef="let row; columns: displayedColumns;"
+    matTooltip="Cliquez dessus la réunion pour avoir plus d'infos"></tr>
+</table>
