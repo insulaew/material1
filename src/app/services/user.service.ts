@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -33,7 +33,13 @@ export class UserService {
 
 	/**On récupère tous les utilisateurs en base de données. */
 	getUsers() {
-		return this.httpClient.get<any>(MEETING_PLANNER_API + 'Utilisateurs');
+		return this.httpClient.get<User[]>(MEETING_PLANNER_API + 'Utilisateurs');
+	}
+
+	/**On récupère un utilisateur grâce à son email en base de données. */
+	getUserByEmail(email: any) {
+		const options = { params: new HttpParams().set('email', email) };
+		return this.httpClient.get<User>(MEETING_PLANNER_API + 'UtilisateurEmail', options);
 	}
 
 }

@@ -10,6 +10,7 @@ import { User } from '../models/User.model';
 import { FreeToolService } from '../services/free-tool.service';
 import { MeetingService } from '../services/meeting.service';
 import { RoomService } from '../services/room.service';
+import { UserService } from '../services/user.service';
 
 export interface ToolsForTypeMeeting {
   VC: string[],
@@ -25,7 +26,6 @@ const ToolsForEachType: ToolsForTypeMeeting =
   RS: [''],
   RC: ['Tableau', 'Ecran', 'Pieuvre']
 }
-
 
 @Component({
   selector: 'app-reserver-salle',
@@ -48,16 +48,16 @@ export class ReserverSalleComponent implements OnInit {
   tableaux!: FreeTool[];
   webcams!: FreeTool[];
 
-
   constructor(
     private formBuilder: FormBuilder,
     private meetingService: MeetingService,
     private roomService: RoomService,
     private freeToolService: FreeToolService,
-    private dialog: MatDialog
-  ) { }
+    private userService: UserService,
+    private dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  /** On récupère les réunions non réservées à l'initialisation. */
+  ngOnInit() {
     this.meetingService.getNotReservedMeetings().subscribe({
       next: data => {
         this.notReservedMeetings = data;
@@ -66,8 +66,8 @@ export class ReserverSalleComponent implements OnInit {
     this.initForm();
   }
 
+  /**On initialise le formulaire. */
   initForm() {
-    console.log(window.sessionStorage.getItem('auth-user'))
     this.meetingForm = this.formBuilder.group({
       reunion: ['', Validators.required],
       salle: ['', Validators.required],
@@ -75,10 +75,10 @@ export class ReserverSalleComponent implements OnInit {
       screen: [''],
       board: [''],
       octopus: ['']
-
     });
   }
 
+  /**Fenêtre de message d'erreur. */
   openDialog(element: any) {
     const dialogRef = this.dialog.open(DialogContentReserveMeeting,
       {
@@ -86,57 +86,41 @@ export class ReserverSalleComponent implements OnInit {
       });
   }
 
-
+  /**On vérifie que la réservation à tous les équipements nécessaires au type de la réunion et on lui affecte un utilisateur 
+   * avant de la sauvegarder.
+   */
   onSubmitForm() {
-    this.meetingToReserve.freeToolDtos = [];
-    console.log(this.meetingForm.value)
     this.meetingToReserve.roomDto = this.selectedRoom;
-    this.meetingToReserve.freeToolDtos.push(...this.ecrans.filter(x => x.freeToolId === this.meetingForm.value['screen']));
-    this.meetingToReserve.freeToolDtos.push(...this.webcams.filter(x => x.freeToolId === this.meetingForm.value['camera']));
-    this.meetingToReserve.freeToolDtos.push(...this.tableaux.filter(x => x.freeToolId === this.meetingForm.value['board']));
-    this.meetingToReserve.freeToolDtos.push(...this.pieuvres.filter(x => x.freeToolId === this.meetingForm.value['octopus']));
-    console.log(JSON.stringify(this.meetingToReserve));
-    console.log(this.checkEnoughRoomAndOrFreeToolsForMeeting(this.meetingToReserve))
-    console.log(this.neededToolsInRoom)
-    if(this.checkEnoughRoomAndOrFreeToolsForMeeting(this.meetingToReserve)) {
+    ['screen', 'camera', 'board', 'octopus'].forEach(element => {
+      this.meetingToReserve.freeToolDtos.push(...this.ecrans.filter(x => x.freeToolId === this.meetingForm.value[element]));
+    });
+    if (this.checkEnoughRoomAndOrFreeToolsForMeeting(this.meetingToReserve)) {
       this.meetingToReserve.isReserved = true;
-      this.meetingToReserve.userDto = new User(1, 'Nicolas', 'Sivignon', 'media.svd@outlook.fr', 'sudoku13', [1]);
-      console.log(this.meetingToReserve.isReserved)
-      console.log(JSON.stringify(this.meetingToReserve))
-      this.meetingService.reserveMeeting(this.meetingToReserve);
+      this.userService.getUserByEmail(window.sessionStorage.getItem('email'))
+        .subscribe({
+          next: (data: User) => {
+            this.meetingToReserve.userDto = data;
+            this.meetingService.reserveMeeting(this.meetingToReserve);
+          }
+        });
     } else {
       this.openDialog('');
     }
   }
 
+  /**On récupère les salles compatibles avec l'heure de la réunion et au nombre de personnes conviées. */
   getRoomsCompatibleForSelectedMeeting(numberOfPersons: number, meetingStartHour: number) {
     this.roomService.getRoomsCompatibleForMeeting(numberOfPersons, meetingStartHour)
-    .subscribe({
-      next: data => {
-        //console.log(data.length)
-        if (data.length == 0) {
-          this.roomService.getRoomsCompatibleForMeetingEmergency(numberOfPersons, meetingStartHour)
-          .subscribe({
-            next: data2 => {
-              //console.log(data2)
-              this.roomsForSelectedMeeting = data2;
-            }
-          });
-        } else {
+      .subscribe({
+        next: data => {
           this.roomsForSelectedMeeting = data;
         }
-      }
-    });
+      });
   }
 
+  /**Fonction des actions à la sélection de la réunion. */
   selectedReunion(event: MatSelectChange) {
-    this.ecrans = [];
-    this.pieuvres = [];
-    this.tableaux = [];
-    this.webcams = [];
-    this.presentToolTypesInRoom = [];
-    this.neededToolsInRoom = [];
-    this.missingToolTypesInRoom = [];
+    this.resetTools();
     this.notReservedMeetings.forEach((meetingToReserve: Meeting) => {
       if (meetingToReserve.id == event.value) {
         this.meetingToReserve = meetingToReserve;
@@ -145,11 +129,9 @@ export class ReserverSalleComponent implements OnInit {
     this.getRoomsCompatibleForSelectedMeeting(this.meetingToReserve.numberOfPersons, this.meetingToReserve.startHour);
   }
 
+  /**Fonction des actions à la sélection de la salle. */
   selectedSalle(event: MatSelectChange) {
-    this.ecrans = [];
-    this.pieuvres = [];
-    this.tableaux = [];
-    this.webcams = [];
+    this.resetTools();
     this.roomsForSelectedMeeting.forEach((selectedRoom: Room) => {
       if (selectedRoom.id == event.value) {
         this.selectedRoom = selectedRoom;
@@ -160,10 +142,8 @@ export class ReserverSalleComponent implements OnInit {
     this.findFreeToolsForMeeting();
   }
 
+  /**Permet de trouver les équipements manquant à une réunion après sélection de la salle. */
   findMissingToolsInRoom(meetingType: String, roomTools: RoomTool[]) {
-    this.presentToolTypesInRoom = [];
-    this.missingToolTypesInRoom = [];
-    this.neededToolsInRoom = [];
     roomTools.forEach((roomTool: RoomTool) => {
       switch (roomTool.type) {
         case 'Pieuvre':
@@ -201,39 +181,41 @@ export class ReserverSalleComponent implements OnInit {
     }
   }
 
-  findFreeToolsForMeeting () {
+  /**Récupère des équipements libres en base de données qui sont nécessaires au type de la réunion en prenant
+   * en compte les équipements de la salle déjà présents.
+   */
+  findFreeToolsForMeeting() {
     this.missingToolTypesInRoom.forEach((freeToolType: string) => {
       this.freeToolService.getFreeToolsByTypeCompatibleForMeeting(freeToolType, this.meetingToReserve.startHour)
-      .subscribe({
-        next: data => {
-          switch(freeToolType) {
-            case 'Pieuvre':
-              this.pieuvres = data;
-              console.log(JSON.stringify(this.pieuvres))
-              break;
-            case 'Ecran':
-              this.ecrans = data;
-              console.log(JSON.stringify(this.ecrans))
-              break;
-            case 'Tableau':
-              this.tableaux = data;
-              console.log(JSON.stringify(this.tableaux))
-              break;
-            case 'Webcam':
-              this.webcams = data;
-              console.log(JSON.stringify(this.webcams))
-              break;
+        .subscribe({
+          next: data => {
+            switch (freeToolType) {
+              case 'Pieuvre':
+                this.pieuvres = data;
+                break;
+              case 'Ecran':
+                this.ecrans = data;
+                break;
+              case 'Tableau':
+                this.tableaux = data;
+                break;
+              case 'Webcam':
+                this.webcams = data;
+                break;
+            }
           }
-        }
-      })
+        })
     });
   }
 
+  /**Vérifie qu'il y a assez q'équipements au type de la réunion, peu importe qu'ils soient libres ou déjà présents
+   * dans la salle au départ.
+   */
   checkEnoughRoomAndOrFreeToolsForMeeting(meeting: Meeting) {
     let result = true;
     this.neededToolsInRoom.forEach(
       (toolType: string) => {
-        switch(toolType) {
+        switch (toolType) {
           case 'Pieuvre':
             if (meeting.freeToolDtos.filter(x => x.type === 'Pieuvre').length == 0 && this.presentToolTypesInRoom.filter(x => x === 'Pieuvre').length == 0) {
               result = false;
@@ -259,6 +241,17 @@ export class ReserverSalleComponent implements OnInit {
     );
 
     return result;
+  }
+
+  /**Réinitialise la liste des équipements affichés. */
+  resetTools() {
+    this.ecrans = [];
+    this.pieuvres = [];
+    this.tableaux = [];
+    this.webcams = [];
+    this.presentToolTypesInRoom = [];
+    this.neededToolsInRoom = [];
+    this.missingToolTypesInRoom = [];
   }
 
 }

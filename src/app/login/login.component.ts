@@ -48,8 +48,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(formValue['email'], formValue['password'])
       .subscribe({
         next: (data: JwtResponse) => {
+          window.sessionStorage.setItem('email', formValue['email']);
           this.tokenStorage.saveToken(data.token);
-          this.tokenStorage.saveUser(data);
           this.authService.isAuth = true;
           this.openSnackBar();
           this.router.navigate(['']);

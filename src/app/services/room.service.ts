@@ -21,9 +21,4 @@ export class RoomService {
         return this.httpClient.get<Room[]>(MEETING_PLANNER_API + 'SallesCompatiblesPourMeeting', options);
     }
 
-    getRoomsCompatibleForMeetingEmergency(numberOfPersons: number, meetingStartHour: number) {
-        const options = { params: new HttpParams().set('numberOfPersons', numberOfPersons).set('meetingStartHour', meetingStartHour) };
-        return this.httpClient.get<Room[]>(MEETING_PLANNER_API + 'SallesCompatiblesPourMeetingEmergency', options);
-    }
-
 }

@@ -31,8 +31,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     private dialog: MatDialog,
     private token: TokenStorageService) { }
 
-    /**Intercepte toutes les requêtes HTTP pour y mettre un token d'identification et éventuellement 
-     * attraper et renvoyer les erreurs.
+    /**Intercepte toutes les requêtes HTTP pour y mettre un token d'authentification et éventuellement 
+     * attraper et afficher les erreurs dans une fenêtre.
      */
   intercept(request: HttpRequest<JwtResponse>, next: HttpHandler): Observable<HttpEvent<JwtResponse>> {
     let authReq = request;
