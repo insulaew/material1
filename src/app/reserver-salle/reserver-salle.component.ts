@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { FreeTool } from '../models/FreeTool.model';
 import { Meeting } from '../models/Meeting.model';
 import { Room } from '../models/Room.model';
@@ -47,6 +48,14 @@ export class ReserverSalleComponent implements OnInit {
   pieuvres!: FreeTool[];
   tableaux!: FreeTool[];
   webcams!: FreeTool[];
+
+  @ViewChild('matRef')
+  matRef!: MatSelect;
+
+  /**Permet de clear les options de mat-select */
+  clear() {
+    this.matRef.options.forEach((data: MatOption) => data.deselect());
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -121,6 +130,8 @@ export class ReserverSalleComponent implements OnInit {
 
   /**Fonction des actions à la sélection de la réunion. */
   selectedReunion(event: MatSelectChange) {
+    this.roomsForSelectedMeeting = [];
+    this.clear();
     this.resetTools();
     this.notReservedMeetings.forEach((meetingToReserve: Meeting) => {
       if (meetingToReserve.id == event.value) {
