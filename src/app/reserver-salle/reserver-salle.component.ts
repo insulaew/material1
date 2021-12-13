@@ -91,9 +91,10 @@ export class ReserverSalleComponent implements OnInit {
    */
   onSubmitForm() {
     this.meetingToReserve.roomDto = this.selectedRoom;
-    ['screen', 'camera', 'board', 'octopus'].forEach(element => {
-      this.meetingToReserve.freeToolDtos.push(...this.ecrans.filter(x => x.freeToolId === this.meetingForm.value[element]));
-    });
+    this.meetingToReserve.freeToolDtos.push(...this.ecrans.filter(x => x.freeToolId === this.meetingForm.value['screen']));
+    this.meetingToReserve.freeToolDtos.push(...this.webcams.filter(x => x.freeToolId === this.meetingForm.value['camera']));
+    this.meetingToReserve.freeToolDtos.push(...this.tableaux.filter(x => x.freeToolId === this.meetingForm.value['board']));
+    this.meetingToReserve.freeToolDtos.push(...this.pieuvres.filter(x => x.freeToolId === this.meetingForm.value['octopus']));
     if (this.checkEnoughRoomAndOrFreeToolsForMeeting(this.meetingToReserve)) {
       this.meetingToReserve.isReserved = true;
       this.userService.getUserByEmail(window.sessionStorage.getItem('email'))
