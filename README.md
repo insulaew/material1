@@ -21,6 +21,7 @@
 - Spring Validation
 - Spring Security
 - JUnit
+- Json Web Token
 
 ### Environnement et outils front-end
 - NPM 8.1.0
@@ -36,6 +37,9 @@
 
 ### Base de données
 - PostgreSQL 14
+
+### API Platform
+- Postman
 
 ### Versioning
 - Git 2.34.0
